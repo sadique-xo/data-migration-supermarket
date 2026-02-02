@@ -1,0 +1,126 @@
+{
+  "started_at": "2026-02-02T17:02:00.410004",
+  "updated_at": "2026-02-02T17:02:20.507629",
+  "completed_at": "",
+  "input_file": "",
+  "total_items": 10,
+  "processed_count": 10,
+  "success_count": 10,
+  "failed_count": 0,
+  "skipped_count": 0,
+  "processed_urls": [
+    "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/16140cb7-835e-4a43-9a62-7f206640bc5a.png",
+    "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5da936b5-f55c-4340-a82d-e50961704d45.png",
+    "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/1ba216f1-f610-4262-b5f1-6d2e711f5b42.png",
+    "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/a1987932-b224-4012-8e63-baad6102f433.png",
+    "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9121af05-f3b7-4a0a-887c-90981478ec3c.png",
+    "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/02579bca-401d-4ac2-97b9-9f06a92f03fe.png",
+    "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/69cfadb7-2d13-4066-b115-a08ea01813f4.png",
+    "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/8d9ae977-2ae1-41cc-a1e9-999f42a71aaf.png",
+    "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/eebed70c-2a38-4a3d-967a-9a8733ff2509.png",
+    "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/c76c7283-d221-4436-b104-7c48dc900207.png"
+  ],
+  "failed_items": [],
+  "mappings": [
+    {
+      "old_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/16140cb7-835e-4a43-9a62-7f206640bc5a.png",
+      "new_url": "https://res.cloudinary.com/disiksbri/image/upload/w_270,q_70,f_auto,c_scale/grocery-lib/16140cb7-835e-4a43-9a62-7f206640bc5a",
+      "cloudflare_image_id": "grocery-lib/16140cb7-835e-4a43-9a62-7f206640bc5a",
+      "status": "success",
+      "error": "",
+      "product_name": "Wai Wai Ready To Eat Chicken Flavoured Noodles",
+      "main_category": "Instant food",
+      "sub_category": "Noodles"
+    },
+    {
+      "old_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5da936b5-f55c-4340-a82d-e50961704d45.png",
+      "new_url": "https://res.cloudinary.com/disiksbri/image/upload/w_270,q_70,f_auto,c_scale/grocery-lib/5da936b5-f55c-4340-a82d-e50961704d45",
+      "cloudflare_image_id": "grocery-lib/5da936b5-f55c-4340-a82d-e50961704d45",
+      "status": "success",
+      "error": "",
+      "product_name": "Naturally Yours Soya No Onion No Garlic Noodles",
+      "main_category": "Instant food",
+      "sub_category": "Noodles"
+    },
+    {
+      "old_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/1ba216f1-f610-4262-b5f1-6d2e711f5b42.png",
+      "new_url": "https://res.cloudinary.com/disiksbri/image/upload/w_270,q_70,f_auto,c_scale/grocery-lib/1ba216f1-f610-4262-b5f1-6d2e711f5b42",
+      "cloudflare_image_id": "grocery-lib/1ba216f1-f610-4262-b5f1-6d2e711f5b42",
+      "status": "success",
+      "error": "",
+      "product_name": "Koka Chicken Noodles",
+      "main_category": "Instant food",
+      "sub_category": "Noodles"
+    },
+    {
+      "old_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/a1987932-b224-4012-8e63-baad6102f433.png",
+      "new_url": "https://res.cloudinary.com/disiksbri/image/upload/w_270,q_70,f_auto,c_scale/grocery-lib/a1987932-b224-4012-8e63-baad6102f433",
+      "cloudflare_image_id": "grocery-lib/a1987932-b224-4012-8e63-baad6102f433",
+      "status": "success",
+      "error": "",
+      "product_name": "Wai Wai Ready To Eat Veg Masala Flavoured Noodles",
+      "main_category": "Instant food",
+      "sub_category": "Noodles"
+    },
+    {
+      "old_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9121af05-f3b7-4a0a-887c-90981478ec3c.png",
+      "new_url": "https://res.cloudinary.com/disiksbri/image/upload/w_270,q_70,f_auto,c_scale/grocery-lib/9121af05-f3b7-4a0a-887c-90981478ec3c",
+      "cloudflare_image_id": "grocery-lib/9121af05-f3b7-4a0a-887c-90981478ec3c",
+      "status": "success",
+      "error": "",
+      "product_name": "Top Ramen Fiery Chilli Noodles",
+      "main_category": "Instant food",
+      "sub_category": "Noodles"
+    },
+    {
+      "old_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/02579bca-401d-4ac2-97b9-9f06a92f03fe.png",
+      "new_url": "https://res.cloudinary.com/disiksbri/image/upload/w_270,q_70,f_auto,c_scale/grocery-lib/02579bca-401d-4ac2-97b9-9f06a92f03fe",
+      "cloudflare_image_id": "grocery-lib/02579bca-401d-4ac2-97b9-9f06a92f03fe",
+      "status": "success",
+      "error": "",
+      "product_name": "Nongshim Shin Ramyun Spicy Instant Noodles",
+      "main_category": "Instant food",
+      "sub_category": "Noodles"
+    },
+    {
+      "old_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/69cfadb7-2d13-4066-b115-a08ea01813f4.png",
+      "new_url": "https://res.cloudinary.com/disiksbri/image/upload/w_270,q_70,f_auto,c_scale/grocery-lib/69cfadb7-2d13-4066-b115-a08ea01813f4",
+      "cloudflare_image_id": "grocery-lib/69cfadb7-2d13-4066-b115-a08ea01813f4",
+      "status": "success",
+      "error": "",
+      "product_name": "Nissin Geki Hot & Spicy Korean Kimchi Ramen Cup Noodles",
+      "main_category": "Instant food",
+      "sub_category": "Noodles"
+    },
+    {
+      "old_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/8d9ae977-2ae1-41cc-a1e9-999f42a71aaf.png",
+      "new_url": "https://res.cloudinary.com/disiksbri/image/upload/w_270,q_70,f_auto,c_scale/grocery-lib/8d9ae977-2ae1-41cc-a1e9-999f42a71aaf",
+      "cloudflare_image_id": "grocery-lib/8d9ae977-2ae1-41cc-a1e9-999f42a71aaf",
+      "status": "success",
+      "error": "",
+      "product_name": "Real Thai Rice Stick Noodles",
+      "main_category": "Instant food",
+      "sub_category": "Noodles"
+    },
+    {
+      "old_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/eebed70c-2a38-4a3d-967a-9a8733ff2509.png",
+      "new_url": "https://res.cloudinary.com/disiksbri/image/upload/w_270,q_70,f_auto,c_scale/grocery-lib/eebed70c-2a38-4a3d-967a-9a8733ff2509",
+      "cloudflare_image_id": "grocery-lib/eebed70c-2a38-4a3d-967a-9a8733ff2509",
+      "status": "success",
+      "error": "",
+      "product_name": "Ching's Secret Veg Hakka Noodles with Masala",
+      "main_category": "Instant food",
+      "sub_category": "Noodles"
+    },
+    {
+      "old_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/c76c7283-d221-4436-b104-7c48dc900207.png",
+      "new_url": "https://res.cloudinary.com/disiksbri/image/upload/w_270,q_70,f_auto,c_scale/grocery-lib/c76c7283-d221-4436-b104-7c48dc900207",
+      "cloudflare_image_id": "grocery-lib/c76c7283-d221-4436-b104-7c48dc900207",
+      "status": "success",
+      "error": "",
+      "product_name": "Koka Lobster Flavour Noodles",
+      "main_category": "Instant food",
+      "sub_category": "Noodles"
+    }
+  ]
+}
