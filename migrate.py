@@ -10,6 +10,7 @@ import os
 import sys
 import argparse
 import logging
+import uuid
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, List, Dict
@@ -94,7 +95,8 @@ def migrate(
     resume: bool = False,
     batch_size: Optional[int] = None,
     upload_from_url: bool = False,
-    clean_downloads: bool = False
+    clean_downloads: bool = False,
+    randomize_ids: bool = False
 ) -> int:
     """
     Run the migration process.
@@ -201,7 +203,14 @@ def migrate(
         
         try:
             # Extract image ID for naming
-            image_id = extract_image_id_from_path(image_url)
+            original_image_id = extract_image_id_from_path(image_url)
+            
+            # Use a random ID if requested
+            if randomize_ids:
+                image_id = str(uuid.uuid4())
+                logger.info(f"Randomized ID: {original_image_id} -> {image_id}")
+            else:
+                image_id = original_image_id
             
             # Get transform parameters (for reference)
             transform_params = parse_transform_params(image_url)
@@ -364,6 +373,11 @@ Examples:
         help='Delete downloaded images after upload'
     )
     parser.add_argument(
+        '--randomize-ids',
+        action='store_true',
+        help='Generate a new random UUID for each image ID'
+    )
+    parser.add_argument(
         '--log-level',
         default='INFO',
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR'],
@@ -381,7 +395,8 @@ Examples:
         resume=args.resume,
         batch_size=args.batch_size,
         upload_from_url=args.upload_from_url,
-        clean_downloads=args.clean_downloads
+        clean_downloads=args.clean_downloads,
+        randomize_ids=args.randomize_ids
     ))
 
 
