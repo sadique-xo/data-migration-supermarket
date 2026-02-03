@@ -1,0 +1,970 @@
+Run # Determine flags - download first, then upload (url-upload fails with 403 from Grofers CDN)
+🚀 Running actual migration...
+📝 Command: python migrate.py --input "Grocery Lib  - Product Data - All Product.csv" --resume --batch-size 20 --delay 10 --clean-downloads
+
+🔗 Testing Cloudinary connection...
+✓ Connected! Credit usage: 0.8%
+2026-02-03 04:34:58,921 - src.progress_tracker - INFO - Loaded state: 10/10 processed
+📂 Resuming from previous state...
+
+📄 Reading input file: Grocery Lib  - Product Data - All Product.csv
+2026-02-03 04:34:59,014 - src.csv_handler - INFO - Successfully read 15816 rows from Grocery Lib  - Product Data - All Product.csv using utf-8-sig
+   Found 15816 products to process
+   Processing batch of 20 items
+
+🚀 Starting migration ...
+
+
+2026-02-03 04:34:59,078 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:34:59,078 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png
+2026-02-03 04:34:59,236 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png
+2026-02-03 04:34:59,236 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png.
+2026-02-03 04:35:00,237 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png
+2026-02-03 04:35:00,323 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png
+2026-02-03 04:35:00,323 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png.
+2026-02-03 04:35:02,325 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png
+2026-02-03 04:35:02,413 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png
+2026-02-03 04:35:02,413 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/e282d0f3-1d28-40d5-8668-789c3ba4aca8.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+Migrating:   0%|          | 0/20 [00:00<?, ?it/s]
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f65a2c90 state=finished raised DownloadError>]
+2026-02-03 04:35:02,415 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:02,415 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png
+2026-02-03 04:35:02,504 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png
+2026-02-03 04:35:02,505 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png.
+2026-02-03 04:35:03,506 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png
+2026-02-03 04:35:03,594 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png
+2026-02-03 04:35:03,594 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png.
+2026-02-03 04:35:05,596 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png
+2026-02-03 04:35:05,682 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png
+2026-02-03 04:35:05,682 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png
+
+The above exception was the direct cause of the following exception:
+
+Migrating:   5%|▌         | 1/20 [00:03<01:03,  3.34s/it]
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6c4ff28b-f733-49bf-af6d-e1878a69b8c7.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f56dc450 state=finished raised DownloadError>]
+2026-02-03 04:35:05,684 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:05,684 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png
+2026-02-03 04:35:05,772 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png
+2026-02-03 04:35:05,772 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png.
+2026-02-03 04:35:06,773 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png
+2026-02-03 04:35:06,861 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png
+2026-02-03 04:35:06,861 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png.
+2026-02-03 04:35:08,863 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png
+2026-02-03 04:35:08,955 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png
+2026-02-03 04:35:08,955 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/b9bb083d-b44f-42a7-922c-39abd37a446c.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f56fdcd0 state=finished raised DownloadError>]
+Migrating:  10%|█         | 2/20 [00:06<00:59,  3.30s/it]
+2026-02-03 04:35:08,959 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:08,959 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png
+2026-02-03 04:35:09,059 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png
+2026-02-03 04:35:09,060 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png.
+2026-02-03 04:35:10,061 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png
+2026-02-03 04:35:10,148 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png
+2026-02-03 04:35:10,148 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png.
+2026-02-03 04:35:12,150 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png
+2026-02-03 04:35:12,243 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png
+2026-02-03 04:35:12,243 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/13ef5495-60d9-4bcc-9717-c238527eb542.png
+
+Migrating:  15%|█▌        | 3/20 [00:09<00:55,  3.29s/it]
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f56fe2d0 state=finished raised DownloadError>]
+2026-02-03 04:35:12,245 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:12,245 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png
+2026-02-03 04:35:12,341 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png
+2026-02-03 04:35:12,341 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png.
+2026-02-03 04:35:13,343 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png
+2026-02-03 04:35:13,459 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png
+2026-02-03 04:35:13,459 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png.
+2026-02-03 04:35:15,461 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png
+2026-02-03 04:35:15,548 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png
+2026-02-03 04:35:15,548 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/a63387f5-1d7e-464f-ba29-67cc6395b727.png
+
+The above exception was the direct cause of the following exception:
+Migrating:  20%|██        | 4/20 [00:13<00:52,  3.29s/it]
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f56fe350 state=finished raised DownloadError>]
+2026-02-03 04:35:15,550 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:15,550 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png
+2026-02-03 04:35:15,638 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png
+2026-02-03 04:35:15,638 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png.
+2026-02-03 04:35:16,640 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png
+2026-02-03 04:35:16,729 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png
+2026-02-03 04:35:16,729 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png.
+2026-02-03 04:35:18,730 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png
+2026-02-03 04:35:18,817 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png
+2026-02-03 04:35:18,817 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/8d7f3901-6a41-48fe-8dab-8f7051f3b952.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f5722350 state=finished raised DownloadError>]
+Migrating:  25%|██▌       | 5/20 [00:16<00:49,  3.29s/it]
+2026-02-03 04:35:18,819 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:18,820 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png
+2026-02-03 04:35:18,907 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png
+2026-02-03 04:35:18,907 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png.
+2026-02-03 04:35:19,908 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png
+2026-02-03 04:35:19,996 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png
+2026-02-03 04:35:19,996 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png.
+2026-02-03 04:35:21,998 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png
+2026-02-03 04:35:22,089 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png
+2026-02-03 04:35:22,089 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/63708712-d1dd-4676-9da1-8ad476fe29ac.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f572bd10 state=finished raised DownloadError>]
+Migrating:  30%|███       | 6/20 [00:19<00:45,  3.29s/it]
+2026-02-03 04:35:22,095 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:22,095 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png
+2026-02-03 04:35:22,187 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png
+2026-02-03 04:35:22,187 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png.
+2026-02-03 04:35:23,189 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png
+2026-02-03 04:35:23,289 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png
+2026-02-03 04:35:23,290 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png.
+2026-02-03 04:35:25,291 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png
+2026-02-03 04:35:25,372 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png
+2026-02-03 04:35:25,372 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f61dc7f1-ed4b-45d1-864c-2446a8de1959.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f5715310 state=finished raised DownloadError>]
+Migrating:  35%|███▌      | 7/20 [00:23<00:42,  3.28s/it]
+2026-02-03 04:35:25,374 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:25,375 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png
+2026-02-03 04:35:25,471 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png
+2026-02-03 04:35:25,472 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png.
+2026-02-03 04:35:26,473 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png
+2026-02-03 04:35:26,568 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png
+2026-02-03 04:35:26,568 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png.
+2026-02-03 04:35:28,570 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png
+2026-02-03 04:35:28,654 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png
+2026-02-03 04:35:28,654 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/57aa51c9-0a42-4cb9-8173-f40bf3505703.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f5714090 state=finished raised DownloadError>]
+Migrating:  40%|████      | 8/20 [00:26<00:39,  3.28s/it]
+2026-02-03 04:35:28,657 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:28,657 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png
+2026-02-03 04:35:28,757 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png
+2026-02-03 04:35:28,757 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png.
+2026-02-03 04:35:29,759 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png
+2026-02-03 04:35:29,848 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png
+2026-02-03 04:35:29,849 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png.
+2026-02-03 04:35:31,850 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png
+2026-02-03 04:35:31,937 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png
+2026-02-03 04:35:31,937 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/ca2a8c95-b3e7-4632-ab3e-41cc1f2ed8ab.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f56fda90 state=finished raised DownloadError>]
+Migrating:  45%|████▌     | 9/20 [00:29<00:36,  3.28s/it]
+2026-02-03 04:35:31,939 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:31,940 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png
+2026-02-03 04:35:32,032 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png
+2026-02-03 04:35:32,032 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png.
+2026-02-03 04:35:33,033 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png
+2026-02-03 04:35:33,126 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png
+2026-02-03 04:35:33,126 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png.
+2026-02-03 04:35:35,128 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png
+2026-02-03 04:35:35,215 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png
+2026-02-03 04:35:35,215 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9df11473-ce29-47ab-92f7-271c56b40ec1.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f651e750 state=finished raised DownloadError>]
+Migrating:  50%|█████     | 10/20 [00:32<00:32,  3.28s/it]
+2026-02-03 04:35:35,219 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:35,219 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png
+2026-02-03 04:35:35,307 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png
+2026-02-03 04:35:35,307 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png.
+2026-02-03 04:35:36,309 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png
+2026-02-03 04:35:36,396 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png
+2026-02-03 04:35:36,396 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png.
+2026-02-03 04:35:38,398 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png
+2026-02-03 04:35:38,489 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png
+2026-02-03 04:35:38,489 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/f479adcc-03bc-4a00-b4b8-c0f7928e5ec7.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f569ad10 state=finished raised DownloadError>]
+Migrating:  55%|█████▌    | 11/20 [00:36<00:29,  3.28s/it]
+2026-02-03 04:35:38,492 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:38,492 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png
+2026-02-03 04:35:38,583 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png
+2026-02-03 04:35:38,583 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png.
+2026-02-03 04:35:39,585 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png
+2026-02-03 04:35:39,677 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png
+2026-02-03 04:35:39,677 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png.
+2026-02-03 04:35:41,679 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png
+2026-02-03 04:35:41,774 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png
+2026-02-03 04:35:41,774 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5035df8f-212e-45fd-a23f-964ffd1d9ba0.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f5722d90 state=finished raised DownloadError>]
+Migrating:  60%|██████    | 12/20 [00:39<00:26,  3.28s/it]
+2026-02-03 04:35:41,777 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:41,777 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png
+2026-02-03 04:35:41,864 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png
+2026-02-03 04:35:41,864 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png.
+2026-02-03 04:35:42,866 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png
+2026-02-03 04:35:42,958 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png
+2026-02-03 04:35:42,958 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png.
+2026-02-03 04:35:44,960 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png
+2026-02-03 04:35:45,045 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png
+2026-02-03 04:35:45,045 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0cf8e9a9-af49-4f0c-9f6a-c3623efceebd.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f5721e50 state=finished raised DownloadError>]
+Migrating:  65%|██████▌   | 13/20 [00:42<00:22,  3.28s/it]
+2026-02-03 04:35:45,051 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:45,051 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png
+2026-02-03 04:35:45,138 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png
+2026-02-03 04:35:45,138 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png.
+2026-02-03 04:35:46,140 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png
+2026-02-03 04:35:46,226 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png
+2026-02-03 04:35:46,227 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png.
+2026-02-03 04:35:48,228 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png
+2026-02-03 04:35:48,319 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png
+2026-02-03 04:35:48,319 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9978ebbe-a01b-461f-8aec-2b899d810037.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f56b8290 state=finished raised DownloadError>]
+Migrating:  70%|███████   | 14/20 [00:45<00:19,  3.28s/it]
+2026-02-03 04:35:48,322 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:48,323 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png
+2026-02-03 04:35:48,411 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png
+2026-02-03 04:35:48,411 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png.
+2026-02-03 04:35:49,412 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png
+2026-02-03 04:35:49,503 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png
+2026-02-03 04:35:49,503 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png.
+2026-02-03 04:35:51,505 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png
+2026-02-03 04:35:51,600 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png
+2026-02-03 04:35:51,601 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/1b665fa0-cf61-4007-bed2-14cf2ee4baae.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f569aad0 state=finished raised DownloadError>]
+Migrating:  75%|███████▌  | 15/20 [00:49<00:16,  3.28s/it]
+2026-02-03 04:35:51,603 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:51,603 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png
+2026-02-03 04:35:51,691 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png
+2026-02-03 04:35:51,691 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png.
+2026-02-03 04:35:52,692 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png
+2026-02-03 04:35:52,777 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png
+2026-02-03 04:35:52,778 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png.
+2026-02-03 04:35:54,779 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png
+2026-02-03 04:35:54,869 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png
+2026-02-03 04:35:54,869 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/5a62904a-6a32-4a7b-9fe7-e1529c3ce0c0.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f5722ad0 state=finished raised DownloadError>]
+Migrating:  80%|████████  | 16/20 [00:52<00:13,  3.28s/it]
+2026-02-03 04:35:54,873 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:54,873 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png
+2026-02-03 04:35:54,961 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png
+2026-02-03 04:35:54,961 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png.
+2026-02-03 04:35:55,963 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png
+2026-02-03 04:35:56,048 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png
+2026-02-03 04:35:56,048 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png.
+2026-02-03 04:35:58,050 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png
+2026-02-03 04:35:58,150 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png
+2026-02-03 04:35:58,150 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/6650cacf-5347-4108-a653-4355531be4fa.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+Migrating:  85%|████████▌ | 17/20 [00:55<00:09,  3.28s/it]
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f57148d0 state=finished raised DownloadError>]
+2026-02-03 04:35:58,156 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:35:58,156 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png
+2026-02-03 04:35:58,249 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png
+2026-02-03 04:35:58,249 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png.
+2026-02-03 04:35:59,251 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png
+2026-02-03 04:35:59,339 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png
+2026-02-03 04:35:59,339 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png.
+2026-02-03 04:36:01,341 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png
+2026-02-03 04:36:01,430 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png
+2026-02-03 04:36:01,430 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/0f0cdd7d-c393-4654-8b06-20078aa6c7b8.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f56b8510 state=finished raised DownloadError>]
+Migrating:  90%|█████████ | 18/20 [00:59<00:06,  3.28s/it]
+2026-02-03 04:36:01,434 - __main__ - INFO - Downloading: Unknown
+2026-02-03 04:36:01,434 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png
+2026-02-03 04:36:01,539 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png
+2026-02-03 04:36:01,539 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 1.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png.
+2026-02-03 04:36:02,541 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png
+2026-02-03 04:36:02,630 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png
+2026-02-03 04:36:02,630 - src.image_downloader - WARNING - Retrying src.image_downloader.download_image in 2.0 seconds as it raised DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png.
+2026-02-03 04:36:04,632 - src.image_downloader - INFO - Downloading: https://cdn.grofers.com/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png
+2026-02-03 04:36:04,716 - src.image_downloader - ERROR - Download failed for https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png
+2026-02-03 04:36:04,716 - __main__ - ERROR - Unexpected error processing https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 107, in download_image
+    response.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/src/image_downloader.py", line 137, in download_image
+    raise DownloadError(f"Download failed: {e}") from e
+src.image_downloader.DownloadError: Download failed: 403 Client Error: Forbidden for url: https://cdn.grofers.com/da/cms-assets/cms/product/9c87c0d7-0445-4728-981a-c807fa60bf63.png
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/data-migration-supermarket/data-migration-supermarket/migrate.py", line 248, in migrate
+    local_path, file_size = download_image(image_url, DOWNLOADS_DIR, image_id)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 378, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 421, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7f55f5722b10 state=finished raised DownloadError>]
+Migrating:  95%|█████████▌| 19/20 [01:02<00:03,  3.28s/it]
+Migrating: 100%|██████████| 20/20 [01:05<00:00,  3.28s/it]
+Migrating: 100%|██████████| 20/20 [01:05<00:00,  3.28s/it]
+
+📝 Writing mapping to: output/mapping.csv
+2026-02-03 04:36:04,719 - src.csv_handler - INFO - Wrote 30 mappings to output/mapping.csv
+📝 Generating full result with new column: output/Final_Result_Grocery Lib  - Product Data - All Product.csv
+✅ Successfully generated output/Final_Result_Grocery Lib  - Product Data - All Product.csv
+
+==================================================
+MIGRATION SUMMARY
+==================================================
+Total items:    15816
+Processed:      30
+  ✓ Success:    10
+  ✗ Failed:     20
+  ⊘ Skipped:    0
+Progress:       0.2%
+
+Failed items:
+  - https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,...
+    Error: Unexpected error: RetryError[<Future at 0x7f55f65a2c90 state=finished raised DownloadError>]
+  - https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,...
+    Error: Unexpected error: RetryError[<Future at 0x7f55f56dc450 state=finished raised DownloadError>]
+  - https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,...
+    Error: Unexpected error: RetryError[<Future at 0x7f55f56fdcd0 state=finished raised DownloadError>]
+  - https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,...
+    Error: Unexpected error: RetryError[<Future at 0x7f55f56fe2d0 state=finished raised DownloadError>]
+  - https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,...
+    Error: Unexpected error: RetryError[<Future at 0x7f55f56fe350 state=finished raised DownloadError>]
+  ... and 15 more
+==================================================
+
+Error: Process completed with exit code 1.

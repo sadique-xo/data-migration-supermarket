@@ -93,8 +93,16 @@ def download_image(
     
     headers = {
         'User-Agent': USER_AGENT,
-        'Accept': 'image/*,*/*',
+        'Accept': 'image/webp,image/apng,image/*,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Referer': 'https://blinkit.com/',
+        'Origin': 'https://blinkit.com',
+        'Sec-Fetch-Dest': 'image',
+        'Sec-Fetch-Mode': 'no-cors',
+        'Sec-Fetch-Site': 'cross-site',
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
     }
     
     try:
