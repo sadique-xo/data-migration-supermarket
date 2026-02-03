@@ -1,0 +1,151 @@
+name: Cloudinary Image Migration
+
+on:
+  # Manual trigger with inputs
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: 'Number of images to process (max 500 for free tier)'
+        required: true
+        default: '500'
+        type: string
+      dry_run:
+        description: 'Dry run (no actual uploads)'
+        required: false
+        default: false
+        type: boolean
+      reset_state:
+        description: 'Reset state and start fresh (WARNING: will lose progress)'
+        required: false
+        default: false
+        type: boolean
+
+  # Scheduled trigger - runs every hour
+  # Uncomment the line below to enable automatic hourly runs
+  # schedule:
+  #   - cron: '0 * * * *'  # Every hour at minute 0
+
+env:
+  INPUT_FILE: 'Grocery Lib  - Product Data - All Product.csv'  # 15,817 products
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full history to push state back
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+      
+      - name: Pull latest state
+        run: |
+          git pull origin main --rebase || true
+      
+      - name: Check current progress
+        run: |
+          if [ -f "output/migration_state.json" ]; then
+            echo "📊 Current migration state:"
+            python -c "
+          import json
+          with open('output/migration_state.json') as f:
+              state = json.load(f)
+          print(f\"  Total items: {state.get('total_items', 'N/A')}\")
+          print(f\"  Processed: {state.get('processed_count', 0)}\")
+          print(f\"  Success: {state.get('success_count', 0)}\")
+          print(f\"  Failed: {state.get('failed_count', 0)}\")
+          remaining = state.get('total_items', 0) - state.get('processed_count', 0)
+          print(f\"  Remaining: {remaining}\")
+          if remaining == 0:
+              print('\\n✅ Migration already complete!')
+              exit(0)
+          "
+          else
+            echo "📊 No previous state found. Starting fresh migration."
+          fi
+      
+      - name: Reset state (if requested)
+        if: ${{ github.event.inputs.reset_state == 'true' }}
+        run: |
+          echo "⚠️ Resetting migration state..."
+          rm -f output/migration_state.json
+          rm -f output/mapping.csv
+      
+      - name: Run migration
+        env:
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          CLOUDINARY_FOLDER: ${{ secrets.CLOUDINARY_FOLDER || 'product-images' }}
+        run: |
+          # Determine flags
+          FLAGS="--resume --url-upload --batch-size ${{ github.event.inputs.batch_size || '500' }} --delay 0.5"
+          
+          if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
+            FLAGS="$FLAGS --dry-run"
+            echo "🧪 Running in DRY RUN mode..."
+          else
+            echo "🚀 Running actual migration..."
+          fi
+          
+          echo "📝 Command: python migrate.py --input \"$INPUT_FILE\" $FLAGS"
+          python migrate.py --input "$INPUT_FILE" $FLAGS
+      
+      - name: Commit state file
+        if: always()
+        run: |
+          git add output/migration_state.json output/mapping.csv output/*.csv || true
+          git diff --staged --quiet || git commit -m "🔄 Update migration state [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          git push origin main || echo "⚠️ Could not push state (might need to pull first)"
+      
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: migration-output-${{ github.run_number }}
+          path: |
+            output/*.csv
+            output/*.json
+            logs/*.log
+          retention-days: 30
+      
+      - name: Print summary
+        if: always()
+        run: |
+          echo "## Migration Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f "output/migration_state.json" ]; then
+            python -c "
+          import json
+          with open('output/migration_state.json') as f:
+              state = json.load(f)
+          print(f\"| Metric | Value |\")
+          print(f\"|--------|-------|\")
+          print(f\"| Total | {state.get('total_items', 'N/A')} |\")
+          print(f\"| Processed | {state.get('processed_count', 0)} |\")
+          print(f\"| Success | {state.get('success_count', 0)} |\")
+          print(f\"| Failed | {state.get('failed_count', 0)} |\")
+          remaining = state.get('total_items', 0) - state.get('processed_count', 0)
+          print(f\"| Remaining | {remaining} |\")
+          pct = (state.get('processed_count', 0) / state.get('total_items', 1)) * 100
+          print(f\"| Progress | {pct:.1f}% |\")
+          " >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No state file found." >> $GITHUB_STEP_SUMMARY
+          fi

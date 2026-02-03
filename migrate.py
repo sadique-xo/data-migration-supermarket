@@ -11,6 +11,7 @@ import sys
 import argparse
 import logging
 import uuid
+import time
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, List, Dict
@@ -96,7 +97,8 @@ def migrate(
     batch_size: Optional[int] = None,
     upload_from_url: bool = False,
     clean_downloads: bool = False,
-    randomize_ids: bool = False
+    randomize_ids: bool = False,
+    delay: float = 0.0
 ) -> int:
     """
     Run the migration process.
@@ -269,6 +271,10 @@ def migrate(
             tracker.mark_success(image_url, new_url, public_id, metadata)
             logger.info(f"Success: {new_url}")
             
+            # Rate limiting delay
+            if delay > 0:
+                time.sleep(delay)
+            
         except (DownloadError, CloudinaryUploadError) as e:
             logger.error(f"Failed to process {image_url}: {e}")
             tracker.mark_failed(image_url, str(e), metadata)
@@ -383,6 +389,12 @@ Examples:
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR'],
         help='Logging level'
     )
+    parser.add_argument(
+        '--delay', '-d',
+        type=float,
+        default=0.0,
+        help='Delay in seconds between uploads (for rate limiting)'
+    )
     
     args = parser.parse_args()
     
@@ -396,7 +408,8 @@ Examples:
         batch_size=args.batch_size,
         upload_from_url=args.upload_from_url,
         clean_downloads=args.clean_downloads,
-        randomize_ids=args.randomize_ids
+        randomize_ids=args.randomize_ids,
+        delay=args.delay
     ))
 
 
