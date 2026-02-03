@@ -94,8 +94,8 @@ jobs:
           CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
           CLOUDINARY_FOLDER: ${{ secrets.CLOUDINARY_FOLDER || 'product-images' }}
         run: |
-          # Determine flags - 10s delay spreads 500 images over ~83 min (safe for 500/hour limit)
-          FLAGS="--resume --url-upload --batch-size ${{ github.event.inputs.batch_size || '500' }} --delay 10"
+          # Determine flags - download first, then upload (url-upload fails with 403 from Grofers CDN)
+          FLAGS="--resume --batch-size ${{ github.event.inputs.batch_size || '500' }} --delay 10 --clean-downloads"
           
           if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
             FLAGS="$FLAGS --dry-run"
